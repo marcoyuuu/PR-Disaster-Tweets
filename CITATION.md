@@ -13,6 +13,18 @@ If you use the HumAID dataset in your research, please cite:
 }
 ```
 
+## ISCRAM Dataset
+If you use the ISCRAM dataset in your research, please cite:
+
+```bibtex
+@article{firoj2018twitter,
+    title={A Twitter Tale of Three Hurricanes: Harvey, Irma, and Maria},
+    author={Alam, Firoj and Ofli, Ferda and Imran, Muhammad and Aupetit, Michael},
+    journal={Proc. of ISCRAM, Rochester, USA},
+    year={2018}
+}
+```
+
 ## Project Citation
 If you use this project in your research, please cite both the HumAID dataset and this repository:
 
@@ -28,5 +40,5 @@ If you use this project in your research, please cite both the HumAID dataset an
 ```
 
 ## Additional References
-- HumAID Dataset: [https://crisisnlp.qcri.org/humaid/](https://crisisnlp.qcri.org/humaid/)
-- ISCRAM18 Dataset: [https://crisisnlp.qcri.org/iscram2018/](https://crisisnlp.qcri.org/iscram2018/) 
+- HumAID Dataset: [Link](https://crisisnlp.qcri.org/humaid_dataset)
+- ISCRAM18 Dataset: [Link](https://arxiv.org/pdf/1805.05144)
