@@ -115,8 +115,8 @@ python analyze_Feb2025_tweets.py
 - **Interaction Metrics**: ![Interaction Metrics](datasets/PR_Earthquake_Tweets_Jan2020/analysis/interaction_metrics.png)
 
 ### Advisory Tweets (Feb 2025) Analysis
-- **Tweet Word Cloud**: ![Tweet Word Cloud](datasets\PR_Advisory_Tweets_Feb_2025\analysis\advisory_tweet_word_cloud.png)
-- **Length vs Likes**: ![Length vs Likes](datasets\PR_Advisory_Tweets_Feb_2025\analysis\advisory_length_vs_likes.png)
+- **Tweet Word Cloud**: ![Tweet Word Cloud](datasets/PR_Advisory_Tweets_Feb_2025/analysis/advisory_tweet_word_cloud.png)
+- **Length vs Likes**: ![Length vs Likes](datasets/PR_Advisory_Tweets_Feb_2025/analysis/advisory_length_vs_likes.png)
 
 ## Project Context
 
