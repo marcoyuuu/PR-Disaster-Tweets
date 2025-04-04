@@ -74,6 +74,37 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
+### 📘 Jupyter Notebook (Unified Analysis)
+
+A consolidated notebook, **`PR-Disaster-Tweets.ipynb`**, is available at the root of the project. This notebook brings together all analysis scripts and documentation in a single, executable format.
+
+#### To run the notebook:
+
+1. **Navigate to the project directory** (if not already there):
+   ```bash
+   cd PR-Disaster-Tweets
+   ```
+
+2. **Activate the virtual environment** (optional but recommended):
+   ```bash
+   source venv/bin/activate        # macOS/Linux
+   venv\Scripts\activate           # Windows
+   ```
+
+3. **Install the required packages** (if not yet installed):
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. **Launch Jupyter Notebook**:
+   ```bash
+   jupyter notebook
+   ```
+
+5. Open `PR-Disaster-Tweets.ipynb` in the browser interface or in IDE if possible and run the cells interactively to explore all datasets and visualizations in one place.
+
+> This notebook is ideal for demonstrations, walkthroughs, and academic presentations of the entire project pipeline.
+
 ### Data Processing and Analysis
 
 #### HumAID Dataset
