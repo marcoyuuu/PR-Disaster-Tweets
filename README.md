@@ -104,6 +104,7 @@ A consolidated notebook, **`PR-Disaster-Tweets.ipynb`**, is available at the roo
 5. Open `PR-Disaster-Tweets.ipynb` in the browser interface or in IDE if possible and run the cells interactively to explore all datasets and visualizations in one place.
 
 > This notebook is ideal for demonstrations, walkthroughs, and academic presentations of the entire project pipeline.
+> It is also available as pdf 'PR-Disaster-Tweets.pdf'.
 
 ### Data Processing and Analysis
 
