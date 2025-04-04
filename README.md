@@ -21,7 +21,7 @@ PR-Disaster-Tweets/
 ## Dataset Details
 
 ### `/datasets/HumAID_maria_tweets/`
-Contains annotated disaster data (hurricanes and earthquakes) from the [CrisisNLP HumAID Dataset (ICWSM 2021)](https://crisisnlp.qcri.org/humaid_dataset). This dataset includes tweets categorized into humanitarian themes and serves as the foundation for supervised thematic classification. Subcategories include:
+Contains annotated disaster data (hurricanes and earthquakes) from the [CrisisNLP HumAID Dataset (ICWSM 2021)](https://crisisnlp.qcri.org/humaid_dataset). This dataset includes approximately 7,300 tweets categorized into humanitarian themes and serves as the foundation for supervised thematic classification. Subcategories include:
 - Caution and advice
 - Displaced people and evacuations
 - Infrastructure and utility damage
@@ -33,14 +33,12 @@ Contains annotated disaster data (hurricanes and earthquakes) from the [CrisisNL
 - Sympathy and support
 
 ### `/datasets/ISCRAM_maria_tweets/`
-Includes files from the [ISCRAM 2018 dataset](https://arxiv.org/pdf/1805.05144) on Hurricane Maria. It contains tweet IDs and image URLs. Text was retrieved via hydration to analyze public perception during the event. Visualizations include:
+Includes files from the [ISCRAM 2018 dataset](https://arxiv.org/pdf/1805.05144) on Hurricane Maria. It contains approximately 1,000 tweets with tweet IDs and image URLs. Text was retrieved via hydration to analyze public perception during the event. Visualizations include:
 - Engagement metrics
 - Likes distribution
-- Tweet length histograms and boxplots
-- Word clouds
 
 ### `/datasets/PR_Earthquake_Tweets_Jan2020/`
-A custom collection of tweets related to the **January 2020 earthquakes in Puerto Rico**. This dataset enables comparisons between past disasters and current social media reactions. Data was scraped using [Octoparse](https://www.octoparse.com/) with filters for keywords, dates, and geolocation. This dataset will be processed for sentiment analysis and misinformation detection. Visualizations include:
+A custom collection of tweets related to the **January 2020 earthquakes in Puerto Rico**. This dataset includes approximately 300 tweets and enables comparisons between past disasters and current social media reactions. Data was scraped using [Octoparse](https://www.octoparse.com/) with filters for keywords, dates, and geolocation. Visualizations include:
 - Interaction metrics
 - Language distribution
 - Likes distribution
@@ -48,7 +46,7 @@ A custom collection of tweets related to the **January 2020 earthquakes in Puert
 - Word clouds
 
 ### `/datasets/PR_Advisory_Tweets_Feb_2025/`
-A custom collection of tweets related to the **February 2025 tsunami advisory**. This dataset enables comparisons between past disasters and current social media reactions. Data was scraped using [Octoparse](https://www.octoparse.com/) with filters for keywords, dates, and geolocation. This dataset will be processed for sentiment analysis and misinformation detection. Visualizations include:
+A custom collection of tweets related to the **February 2025 tsunami advisory**. This dataset includes approximately 250 tweets. It enables comparisons between past disasters and current social media reactions. Data was scraped using [Octoparse](https://www.octoparse.com/) with filters for keywords, dates, and geolocation. This dataset will be processed for sentiment analysis and misinformation detection. Visualizations include:
 - Engagement metrics
 - Language distribution
 - Likes distribution
@@ -61,11 +59,17 @@ A custom collection of tweets related to the **February 2025 tsunami advisory**.
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/PR-Disaster-Tweets.git
+git clone https://github.com/marcoyuuu/PR-Disaster-Tweets.git
 cd PR-Disaster-Tweets
 ```
 
-2. Install dependencies:
+2. Create a virtual environment (optional but recommended):
+```bash
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+```
+
+3. Install dependencies:
 ```bash
 pip install -r requirements.txt
 ```
@@ -74,37 +78,45 @@ pip install -r requirements.txt
 
 #### HumAID Dataset
 ```bash
-python datasets/HumAID_maria_tweets/maria_analysis/analyze_humaid.py
+cd datasets/HumAID_maria_tweets/analysis
+python analyze_humaid.py
 ```
 
 #### ISCRAM Dataset
 ```bash
-python datasets/ISCRAM_maria_tweets/analyze_ISCAM_tweets.py
+cd datasets/ISCRAM_maria_tweets/analysis/
+python analyze_ISCRAM_tweets.py
 ```
 
 #### Earthquake Tweets (January 2020)
 ```bash
-python datasets/PR_Earthquake_Tweets_Jan2020/analyze_Jan2020_tweets.py
+cd datasets/PR_Earthquake_Tweets_Jan2020/analysis/
+python analyze_Jan2020_tweets.py
 ```
 
 #### Advisory Tweets (February 2025)
 ```bash
-python datasets/PR_Advisory_Tweets_Feb_2025/analyze_Feb2025_tweets.py
+cd datasets/PR_Advisory_Tweets_Feb_2025/analysis/
+python analyze_Feb2025_tweets.py
 ```
 
 ## Example Visualizations
 
-### Hurricane Maria Analysis
-- **Label Distribution**: ![Label Distribution](datasets/HumAID_maria_tweets/maria_analysis/maria_label_distribution.png)
-- **Data Splits**: ![Data Splits](datasets/HumAID_maria_tweets/maria_analysis/maria_splits_distribution.png)
+### HumAID Hurricane María Tweets Analysis
+- **Tweet Word Cloud**: ![Tweet Word Cloud](datasets/HumAID_maria_tweets/analysis/humaid_tweet_word_cloud.png)
+- **Class Label Distribution**: ![Class Distribution](datasets/HumAID_maria_tweets/analysis/humaid_class_distribution.png)
 
-### Earthquake Tweets Analysis
-- **Likes Distribution**: ![Likes Distribution](datasets/PR_Earthquake_Tweets_Jan2020/likes_distribution.png)
-- **Word Cloud**: ![Word Cloud](datasets/PR_Earthquake_Tweets_Jan2020/tweet_word_cloud.png)
+### ISCRAM Hurricane María Tweets Analysis
+- **Tweet Word Cloud**: ![Tweet Word Cloud](datasets/ISCRAM_maria_tweets/analysis/tweet_word_cloud.png)
+- **Length vs Likes**: ![Length vs Likes](datasets/ISCRAM_maria_tweets/analysis/length_vs_likes.png)
 
-### Advisory Tweets Analysis
-- **Engagement Metrics**: ![Engagement Metrics](datasets/PR_Advisory_Tweets_Feb_2025/advisory_engagement_metrics.png)
-- **Language Distribution**: ![Language Distribution](datasets/PR_Advisory_Tweets_Feb_2025/advisory_language_distribution.png)
+### Earthquake Tweets (Jan 2020) Analysis
+- **Tweet Word Cloud**: ![Tweet Word Cloud](datasets/PR_Earthquake_Tweets_Jan2020/analysis/tweet_word_cloud.png)
+- **Interaction Metrics**: ![Interaction Metrics](datasets/PR_Earthquake_Tweets_Jan2020/analysis/interaction_metrics.png)
+
+### Advisory Tweets (Feb 2025) Analysis
+- **Tweet Word Cloud**: ![Tweet Word Cloud](datasets\PR_Advisory_Tweets_Feb_2025\analysis\advisory_tweet_word_cloud.png)
+- **Length vs Likes**: ![Length vs Likes](datasets\PR_Advisory_Tweets_Feb_2025\analysis\advisory_length_vs_likes.png)
 
 ## Project Context
 

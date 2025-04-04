@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-Script de Análisis y Visualización del CSV "ISCRAM_hydrated_tweets.csv"
+Script de Análisis y Visualización del CSV "ISCRAM_maria_tweets.csv"
 
 Este script realiza un análisis exploratorio de datos (EDA) sobre un conjunto de tuits "hidratados".
 El análisis incluye:
@@ -206,7 +206,7 @@ def main():
     """
     Función principal: carga, preprocesa y genera las visualizaciones del dataset.
     """
-    filepath = "ISCRAM_hydrated_tweets.csv"  # Actualiza la ruta si es necesario
+    filepath = "../ISCRAM_maria_tweets.csv"  # Actualiza la ruta si es necesario
     
     if not os.path.exists(filepath):
         print(f"El archivo '{filepath}' no existe. Verifica la ruta.")

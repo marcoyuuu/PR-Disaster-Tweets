@@ -1,10 +1,9 @@
 #!/usr/bin/env python
 """
-Script de Análisis y Visualización del CSV "PR_Advisory_Tweets_Feb_2025.csv"
+Script de Análisis y Visualización del CSV "PR_Earthquake_Tweets_Jan2020.csv"
 
 Este script realiza un análisis exploratorio de datos (EDA) sobre un conjunto de tuits
-relacionados con los eventos de advertencia de tsunami en febrero de 2025. Se consideran
-las siguientes columnas:
+relacionados con terremotos en enero de 2020. Se consideran las siguientes columnas:
     - UTC_Time: Fecha y hora en formato UTC.
     - Tweet_Content: Contenido textual del tuit.
     - Reply_Count: Número de respuestas.
@@ -17,13 +16,13 @@ El análisis incluye:
     - Carga y preprocesamiento del dataset.
     - Conversión de 'UTC_Time' a datetime.
     - Cálculo de la longitud de cada tuit a partir de 'Tweet_Content'.
-    - Visualización de las métricas de interacción mediante diagramas de caja.
-    - Visualización de la distribución de la longitud de los tuits (histograma y diagrama de caja).
-    - Visualización de la distribución de likes.
-    - Análisis de correlación entre la longitud del tuit y la cantidad de likes.
+    - Visualización de la distribución de likes (histograma).
+    - Visualización de las métricas de interacción mediante un diagrama de caja.
+    - Análisis de la distribución de la longitud de los tuits (histograma y diagrama de caja).
+    - Visualización de la relación entre la longitud del tuit y el número de likes.
     - Visualización de la distribución de idiomas.
     - Generación de una nube de palabras a partir de 'Tweet_Content', aplicando limpieza
-      para eliminar URLs, menciones y tokens irrelevantes.
+      para eliminar URLs, menciones y palabras irrelevantes.
 
 Requerimientos:
     - pandas
@@ -66,7 +65,7 @@ def load_data(filepath):
 def preprocess_data(df):
     """
     Preprocesa los datos:
-      - Convierte la columna 'UTC_Time' a datetime.
+      - Convierte la columna 'UTC_Time' a datetime usando dateutil.
       - Calcula la longitud de cada tuit a partir de 'Tweet_Content'.
     
     Args:
@@ -75,7 +74,7 @@ def preprocess_data(df):
     Returns:
         DataFrame: DataFrame preprocesado.
     """
-    # Convertir 'UTC_Time' a datetime (se usa dateutil para mayor flexibilidad)
+    # Convertir 'UTC_Time' a datetime
     if 'UTC_Time' in df.columns:
         try:
             df['UTC_Time'] = pd.to_datetime(df['UTC_Time'], errors='coerce')
@@ -89,14 +88,16 @@ def preprocess_data(df):
     if 'Tweet_Content' in df.columns:
         df['tweet_length'] = df['Tweet_Content'].apply(lambda x: len(x) if isinstance(x, str) else 0)
     else:
-        print("La columna 'Tweet_Content' no se encontró para calcular la longitud de los tuits.")
+        print("La columna 'Tweet_Content' no se encontró para calcular la longitud del tuit.")
     
     return df
 
-def plot_engagement_metrics(df):
+def plot_interaction_metrics(df):
     """
-    Genera un diagrama de caja para visualizar la distribución de métricas de interacción:
+    Visualiza la distribución de las métricas de interacción:
     'Reply_Count', 'Repost_Count', 'Like_Count' y 'Bookmark_Count'.
+    
+    Se genera un diagrama de caja para cada métrica.
     """
     interaction_cols = ['Reply_Count', 'Repost_Count', 'Like_Count', 'Bookmark_Count']
     existing_cols = [col for col in interaction_cols if col in df.columns]
@@ -107,40 +108,42 @@ def plot_engagement_metrics(df):
         sns.boxplot(x="Métrica", y="Conteo", data=df_interactions)
         plt.title("Distribución de Métricas de Interacción")
         plt.tight_layout()
-        plt.savefig("advisory_engagement_metrics.png")
+        plt.savefig("interaction_metrics.png")
         plt.show()
     else:
         print("No se encontraron columnas de interacción para visualizar.")
 
 def plot_tweet_length_distribution(df):
     """
-    Genera una visualización de la distribución de la longitud de los tuits.
-    Se muestran un histograma y un diagrama de caja.
+    Visualiza la distribución de la longitud de los tuits:
+      - Histograma.
+      - Diagrama de caja.
     """
     if 'tweet_length' in df.columns:
+        # Histograma
         plt.figure(figsize=(12, 6))
         plt.hist(df['tweet_length'], bins=30, edgecolor='k', alpha=0.7)
         plt.title("Distribución de la Longitud de los Tuits")
         plt.xlabel("Longitud (número de caracteres)")
         plt.ylabel("Frecuencia")
         plt.tight_layout()
-        plt.savefig("advisory_tweet_length_histogram.png")
+        plt.savefig("tweet_length_histogram.png")
         plt.show()
         
+        # Diagrama de caja
         plt.figure(figsize=(8, 4))
         sns.boxplot(x=df['tweet_length'])
         plt.title("Diagrama de Caja de la Longitud de los Tuits")
         plt.xlabel("Longitud (número de caracteres)")
         plt.tight_layout()
-        plt.savefig("advisory_tweet_length_boxplot.png")
+        plt.savefig("tweet_length_boxplot.png")
         plt.show()
     else:
-        print("La columna 'tweet_length' no está disponible para el análisis de longitud.")
+        print("La columna 'tweet_length' no está disponible para analizar la longitud de los tuits.")
 
 def plot_likes_distribution(df):
     """
-    Genera una visualización de la distribución de likes.
-    Se muestra un histograma.
+    Visualiza la distribución de likes mediante un histograma.
     """
     if 'Like_Count' in df.columns:
         plt.figure(figsize=(12, 6))
@@ -149,24 +152,23 @@ def plot_likes_distribution(df):
         plt.xlabel("Número de Likes")
         plt.ylabel("Frecuencia")
         plt.tight_layout()
-        plt.savefig("advisory_likes_distribution.png")
+        plt.savefig("likes_distribution.png")
         plt.show()
     else:
         print("La columna 'Like_Count' no está disponible para analizar la distribución de likes.")
 
 def plot_length_vs_likes(df):
     """
-    Genera un gráfico de dispersión para analizar la relación entre la longitud de los tuits
-    y la cantidad de likes.
+    Genera un gráfico de dispersión para analizar la relación entre la longitud del tuit y la cantidad de likes.
     """
     if 'tweet_length' in df.columns and 'Like_Count' in df.columns:
         plt.figure(figsize=(10, 6))
         sns.scatterplot(x='tweet_length', y='Like_Count', data=df, alpha=0.7)
-        plt.title("Relación entre Longitud de Tuits y Número de Likes")
+        plt.title("Relación entre Longitud del Tuit y Número de Likes")
         plt.xlabel("Longitud del Tuit (caracteres)")
         plt.ylabel("Número de Likes")
         plt.tight_layout()
-        plt.savefig("advisory_length_vs_likes.png")
+        plt.savefig("length_vs_likes.png")
         plt.show()
     else:
         print("No se encontraron las columnas necesarias ('tweet_length', 'Like_Count') para este análisis.")
@@ -183,14 +185,14 @@ def plot_language_distribution(df):
         plt.xlabel("Idioma")
         plt.ylabel("Cantidad de Tuits")
         plt.tight_layout()
-        plt.savefig("advisory_language_distribution.png")
+        plt.savefig("language_distribution.png")
         plt.show()
     else:
         print("La columna 'Language' no se encontró para visualizar la distribución de idiomas.")
 
 def generate_word_cloud(df):
     """
-    Genera una nube de palabras a partir del contenido de los tuits (columna 'Tweet_Content').
+    Genera una nube de palabras a partir del contenido de 'Tweet_Content'.
     Se aplica limpieza para eliminar URLs, menciones, el token 'RT' y caracteres irrelevantes,
     además de usar una lista de stopwords personalizada.
     """
@@ -204,11 +206,11 @@ def generate_word_cloud(df):
     # Limpieza del texto:
     # 1. Eliminar URLs.
     cleaned_text = re.sub(r'https?://\S+', '', all_text)
-    # 2. Eliminar menciones (tokens que comienzan con @).
+    # 2. Eliminar menciones de Twitter (palabras que comienzan con @).
     cleaned_text = re.sub(r'@\w+', '', cleaned_text)
     # 3. Eliminar el token 'RT' (retweets).
     cleaned_text = re.sub(r'\bRT\b', '', cleaned_text)
-    # 4. Eliminar caracteres que no sean letras (permitiendo acentos y la ñ en español).
+    # 4. Eliminar caracteres que no sean letras (se preservan acentos y la ñ para español).
     cleaned_text = re.sub(r'[^A-Za-záéíóúñüÁÉÍÓÚÑÜ\s]', '', cleaned_text)
     # 5. Convertir a minúsculas.
     cleaned_text = cleaned_text.lower()
@@ -240,14 +242,14 @@ def generate_word_cloud(df):
     plt.axis("off")
     plt.title("Nube de Palabras (Texto Limpio)")
     plt.tight_layout()
-    plt.savefig("advisory_tweet_word_cloud.png")
+    plt.savefig("tweet_word_cloud.png")
     plt.show()
 
 def main():
     """
     Función principal: carga, preprocesa y genera las visualizaciones del dataset.
     """
-    filepath = "PR_Advisory_Tweets_Feb_2025.csv"  # Actualiza la ruta si es necesario
+    filepath = "../PR_Earthquake_Tweets_Jan2020.csv"  # Actualiza la ruta si es necesario
     
     if not os.path.exists(filepath):
         print(f"El archivo '{filepath}' no existe. Verifica la ruta.")
@@ -267,7 +269,7 @@ def main():
     df = preprocess_data(df)
 
     # Visualizar métricas de interacción
-    plot_engagement_metrics(df)
+    plot_interaction_metrics(df)
     
     # Visualizar la distribución de la longitud de los tuits
     plot_tweet_length_distribution(df)
@@ -275,13 +277,13 @@ def main():
     # Visualizar la distribución de likes
     plot_likes_distribution(df)
     
-    # Análisis de correlación entre la longitud del tuit y los likes
+    # Visualizar la relación entre la longitud del tuit y los likes
     plot_length_vs_likes(df)
     
     # Visualizar la distribución de idiomas
     plot_language_distribution(df)
     
-    # Generar la nube de palabras con el texto limpio
+    # Generar la nube de palabras con limpieza aplicada
     generate_word_cloud(df)
 
 if __name__ == "__main__":
