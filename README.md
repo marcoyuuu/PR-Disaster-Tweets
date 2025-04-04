@@ -33,7 +33,7 @@ Contains annotated disaster data (hurricanes and earthquakes) from the [CrisisNL
 - Sympathy and support
 
 ### `/datasets/ISCRAM_maria_tweets/`
-Includes files from the [ISCRAM 2018 dataset](https://arxiv.org/pdf/1805.05144) on Hurricane Maria. It contains approximately 1,000 tweets with tweet IDs and image URLs. Text was retrieved via hydration to analyze public perception during the event. Visualizations include:
+Includes files from the [ISCRAM 2018 dataset](https://arxiv.org/pdf/1805.05144) on Hurricane Maria. It contains approximately 1,000 tweets with tweet IDs and image URLs. Text was retrieved via hydration with [twikit](https://github.com/d60/twikit) to analyze public perception during the event. Visualizations include:
 - Engagement metrics
 - Likes distribution
 
