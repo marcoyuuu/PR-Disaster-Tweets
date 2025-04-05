@@ -1,4 +1,14 @@
 pandas
+numpy
 matplotlib
 seaborn
+scipy
+plotly
+dash
+dash-core-components
+dash-html-components
+folium
+pywaffle
 wordcloud
+nltk
+langdetect
