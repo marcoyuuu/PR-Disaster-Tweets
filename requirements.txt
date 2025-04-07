@@ -12,3 +12,6 @@ pywaffle
 wordcloud
 nltk
 langdetect
+scikit-learn
+googletrans
+umap-learn

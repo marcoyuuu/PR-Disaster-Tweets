@@ -1,166 +1,166 @@
-# PR-Disaster-Tweets: Analysis of Public Perception and Media Coverage During Natural Disasters in Puerto Rico
+# PR-Disaster-Tweets: Análisis de la percepción pública y la cobertura mediática durante desastres naturales en Puerto Rico
 
-## Project Overview
-This project focuses on analyzing public perception and media coverage during natural disasters in Puerto Rico, with a particular emphasis on Hurricane Maria (2017), the 2020 earthquakes, and 2025 tsunami advisory events. The analysis combines multiple datasets, including HumAID, ISCRAM18, and custom-scraped datasets, to provide insights into disaster response patterns, public sentiment, and humanitarian needs.
+## Descripción del proyecto
+Este proyecto se enfoca en analizar la percepción pública y la cobertura mediática durante desastres naturales en Puerto Rico, con especial énfasis en el huracán María (2017), los terremotos de 2020 y la alerta de tsunami de 2025. El análisis combina múltiples conjuntos de datos, incluyendo HumAID, ISCRAM18 y datasets personalizados recolectados, con el fin de ofrecer información sobre patrones de respuesta ante desastres, sentimiento público y necesidades humanitarias.
 
-## Repository Structure
+## Estructura del repositorio
 ```
 PR-Disaster-Tweets/
-├── datasets/                  # All datasets used in the project
-│   ├── HumAID_maria_tweets/   # HumAID dataset files for Hurricane Maria
-│   ├── ISCRAM_maria_tweets/   # ISCRAM dataset files for Hurricane Maria
-│   ├── PR_Earthquake_Tweets_Jan2020/ # Custom-scraped dataset for January 2020 earthquakes
-│   └── PR_Advisory_Tweets_Feb_2025/  # Custom-scraped dataset for February 2025 tsunami advisory
-├── .venv/                     # Virtual environment for dependencies
-├── CITATION.md                # Citation information
-├── LICENSE.md                 # License information
-├── README.md                  # Project documentation
-├── requirements.txt           # Python dependencies
+├── datasets/                          # Todos los conjuntos de datos utilizados
+│   ├── HumAID_maria_tweets/           # Archivos del dataset HumAID para el huracán María
+│   ├── ISCRAM_maria_tweets/           # Archivos del dataset ISCRAM para el huracán María
+│   ├── PR_Earthquake_Tweets_Jan2020/  # Dataset personalizado para los terremotos de enero 2020
+│   └── PR_Advisory_Tweets_Feb_2025/   # Dataset personalizado para la alerta de tsunami de febrero 2025
+├── .venv/                             # Entorno virtual para dependencias
+├── CITATION.md                        # Información de citación
+├── LICENSE.md                         # Información de la licencia
+├── README.md                          # Documentación del proyecto
+├── requirements.txt                   # Dependencias de Python
 ```
 
-## Dataset Details
+## Detalles de los conjuntos de datos
 
 ### `/datasets/HumAID_maria_tweets/`
-Contains annotated disaster data (hurricanes and earthquakes) from the [CrisisNLP HumAID Dataset (ICWSM 2021)](https://crisisnlp.qcri.org/humaid_dataset). This dataset includes approximately 7,300 tweets categorized into humanitarian themes and serves as the foundation for supervised thematic classification. Subcategories include:
-- Caution and advice
-- Displaced people and evacuations
-- Infrastructure and utility damage
-- Injured or dead people
-- Not humanitarian
-- Other relevant information
-- Requests or urgent needs
-- Rescue volunteering or donation effort
-- Sympathy and support
+Contiene datos anotados de desastres (huracanes y terremotos) del [Dataset HumAID de CrisisNLP (ICWSM 2021)](https://crisisnlp.qcri.org/humaid_dataset). Este dataset incluye aproximadamente 7,300 tweets clasificados por temas humanitarios y sirve como base para tareas de clasificación temática supervisada. Las subcategorías incluyen:
+- Precaución y consejos
+- Personas desplazadas y evacuaciones
+- Daños a infraestructura y servicios
+- Personas heridas o fallecidas
+- No humanitario
+- Otra información relevante
+- Solicitudes o necesidades urgentes
+- Voluntariado o donaciones de rescate
+- Simpatía y apoyo
 
 ### `/datasets/ISCRAM_maria_tweets/`
-Includes files from the [ISCRAM 2018 dataset](https://arxiv.org/pdf/1805.05144) on Hurricane Maria. It contains approximately 1,000 tweets with tweet IDs. Since original dataset only contained tweet ID's, text was retrieved via hydration with [twikit](https://github.com/d60/twikit) to analyze public perception during the event. Visualizations include:
-- Engagement metrics
-- Likes distribution
+Incluye archivos del [dataset ISCRAM 2018](https://arxiv.org/pdf/1805.05144) sobre el huracán María. Contiene aproximadamente 1,000 tweets con ID de tweet. Como el dataset original solo incluía los IDs, el texto fue recuperado mediante "hydration" con [twikit](https://github.com/d60/twikit) para analizar la percepción pública durante el evento. Visualizaciones incluidas:
+- Métricas de interacción
+- Distribución de "likes"
 
 ### `/datasets/PR_Earthquake_Tweets_Jan2020/`
-A custom collection of tweets related to the **January 2020 earthquakes in Puerto Rico**. This dataset includes approximately 300 tweets and enables comparisons between past disasters and current social media reactions. Data was scraped using [Octoparse](https://www.octoparse.com/) with filters for keywords, dates, and geolocation. Visualizations include:
-- Interaction metrics
-- Language distribution
-- Likes distribution
-- Tweet length histograms and boxplots
-- Word clouds
+Colección personalizada de tweets relacionados con los **terremotos de enero 2020 en Puerto Rico**. Incluye aproximadamente 300 tweets y permite comparaciones entre desastres pasados y reacciones actuales en redes sociales. Los datos fueron recolectados usando [Octoparse](https://www.octoparse.com/) con filtros por palabras clave, fechas y geolocalización. Visualizaciones incluidas:
+- Métricas de interacción
+- Distribución de idiomas
+- Distribución de likes
+- Histogramas y boxplots de longitud de tweet
+- Nubes de palabras
 
 ### `/datasets/PR_Advisory_Tweets_Feb_2025/`
-A custom collection of tweets related to the **February 2025 tsunami advisory**. This dataset includes approximately 250 tweets. It enables comparisons between past disasters and current social media reactions. Data was scraped using [Octoparse](https://www.octoparse.com/) with filters for keywords, dates, and geolocation. This dataset will be processed for sentiment analysis and misinformation detection. Visualizations include:
-- Engagement metrics
-- Language distribution
-- Likes distribution
-- Tweet length histograms and boxplots
-- Word clouds
+Colección personalizada de tweets sobre la **alerta de tsunami en febrero de 2025**. Incluye aproximadamente 250 tweets. Permite comparar desastres anteriores con reacciones actuales. Los datos fueron recolectados usando [Octoparse](https://www.octoparse.com/) aplicando filtros por palabras clave, fechas y ubicación. Este dataset se utilizará para análisis de sentimiento y detección de desinformación. Visualizaciones incluidas:
+- Métricas de interacción
+- Distribución de idiomas
+- Distribución de likes
+- Histogramas y boxplots de longitud de tweet
+- Nubes de palabras
 
-## Running the Analysis
+## Ejecución del análisis
 
-### Setup and Installation
+### Configuración e instalación
 
-1. Clone the repository:
+1. Clona el repositorio:
 ```bash
 git clone https://github.com/marcoyuuu/PR-Disaster-Tweets.git
 cd PR-Disaster-Tweets
 ```
 
-2. Create a virtual environment (optional but recommended):
+2. Crea un entorno virtual (opcional pero recomendado):
 ```bash
 python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+source venv/bin/activate  # En Windows: venv\Scripts\activate
 ```
 
-3. Install dependencies:
+3. Instala las dependencias:
 ```bash
 pip install -r requirements.txt
 ```
 
-### 📘 Jupyter Notebook (Unified Analysis)
+### 📘 Notebook Jupyter (Análisis unificado)
 
-A consolidated notebook, **`PR-Disaster-Tweets.ipynb`**, is available at the root of the project. This notebook brings together all analysis scripts and documentation in a single, executable format.
+Se incluye un notebook consolidado, **`PR-Disaster-Tweets.ipynb`**, en la raíz del proyecto. Este archivo integra todos los scripts de análisis y documentación en un solo formato interactivo.
 
-#### To run the notebook:
+#### Para ejecutarlo:
 
-1. **Navigate to the project directory** (if not already there):
+1. **Navega al directorio del proyecto** (si no estás ya allí):
    ```bash
    cd PR-Disaster-Tweets
    ```
 
-2. **Activate the virtual environment** (optional but recommended):
+2. **Activa el entorno virtual** (opcional pero recomendado):
    ```bash
    source venv/bin/activate        # macOS/Linux
    venv\Scripts\activate           # Windows
    ```
 
-3. **Install the required packages** (if not yet installed):
+3. **Instala las dependencias necesarias** (si aún no lo hiciste):
    ```bash
    pip install -r requirements.txt
    ```
 
-4. **Launch Jupyter Notebook**:
+4. **Lanza Jupyter Notebook**:
    ```bash
    jupyter notebook
    ```
 
-5. Open `PR-Disaster-Tweets.ipynb` in the browser interface or in IDE if possible and run the cells interactively to explore all datasets and visualizations in one place.
+5. Abre `PR-Disaster-Tweets.ipynb` desde el navegador o desde un IDE y ejecuta las celdas para explorar todos los datasets y visualizaciones en un solo lugar.
 
-> This notebook is ideal for demonstrations, walkthroughs, and academic presentations of the entire project pipeline.
-> It is also available as pdf 'PR-Disaster-Tweets.pdf'.
+> Este notebook es ideal para demostraciones, presentaciones académicas y análisis exploratorios completos.
+> También está disponible como PDF: `PR-Disaster-Tweets.pdf`.
 
-### Data Processing and Analysis
+### Procesamiento y análisis de datos
 
-#### HumAID Dataset
+#### Dataset HumAID
 ```bash
 cd datasets/HumAID_maria_tweets/analysis
 python analyze_humaid.py
 ```
 
-#### ISCRAM Dataset
+#### Dataset ISCRAM
 ```bash
 cd datasets/ISCRAM_maria_tweets/analysis/
 python analyze_ISCRAM_tweets.py
 ```
 
-#### Earthquake Tweets (January 2020)
+#### Tweets de los Terremotos (Enero 2020)
 ```bash
 cd datasets/PR_Earthquake_Tweets_Jan2020/analysis/
 python analyze_Jan2020_tweets.py
 ```
 
-#### Advisory Tweets (February 2025)
+#### Tweets de la Alerta (Febrero 2025)
 ```bash
 cd datasets/PR_Advisory_Tweets_Feb_2025/analysis/
 python analyze_Feb2025_tweets.py
 ```
 
-## Example Visualizations
+## Ejemplos de visualizaciones
 
-### HumAID Hurricane María Tweets Analysis
-- **Tweet Word Cloud**: ![Tweet Word Cloud](datasets/HumAID_maria_tweets/analysis/humaid_tweet_word_cloud.png)
-- **Class Label Distribution**: ![Class Distribution](datasets/HumAID_maria_tweets/analysis/humaid_class_distribution.png)
+### Análisis de tweets del huracán María (HumAID)
+- **Nube de Palabras**: ![Nube](datasets/HumAID_maria_tweets/analysis/humaid_tweet_word_cloud.png)
+- **Distribución por Etiqueta**: ![Etiquetas](datasets/HumAID_maria_tweets/analysis/humaid_class_distribution.png)
 
-### ISCRAM Hurricane María Tweets Analysis
-- **Tweet Word Cloud**: ![Tweet Word Cloud](datasets/ISCRAM_maria_tweets/analysis/tweet_word_cloud.png)
-- **Length vs Likes**: ![Length vs Likes](datasets/ISCRAM_maria_tweets/analysis/length_vs_likes.png)
+### Análisis de tweets del huracán María (ISCRAM)
+- **Nube de Palabras**: ![Nube](datasets/ISCRAM_maria_tweets/analysis/tweet_word_cloud.png)
+- **Longitud vs Likes**: ![Longitud](datasets/ISCRAM_maria_tweets/analysis/length_vs_likes.png)
 
-### Earthquake Tweets (Jan 2020) Analysis
-- **Tweet Word Cloud**: ![Tweet Word Cloud](datasets/PR_Earthquake_Tweets_Jan2020/analysis/tweet_word_cloud.png)
-- **Interaction Metrics**: ![Interaction Metrics](datasets/PR_Earthquake_Tweets_Jan2020/analysis/interaction_metrics.png)
+### Análisis de tweets de los terremotos (Enero 2020)
+- **Nube de Palabras**: ![Nube](datasets/PR_Earthquake_Tweets_Jan2020/analysis/tweet_word_cloud.png)
+- **Métricas de Interacción**: ![Interacción](datasets/PR_Earthquake_Tweets_Jan2020/analysis/interaction_metrics.png)
 
-### Advisory Tweets (Feb 2025) Analysis
-- **Tweet Word Cloud**: ![Tweet Word Cloud](datasets/PR_Advisory_Tweets_Feb_2025/analysis/advisory_tweet_word_cloud.png)
-- **Length vs Likes**: ![Length vs Likes](datasets/PR_Advisory_Tweets_Feb_2025/analysis/advisory_length_vs_likes.png)
+### Análisis de tweets de la alerta de tsunami (Febrero 2025)
+- **Nube de Palabras**: ![Nube](datasets/PR_Advisory_Tweets_Feb_2025/analysis/advisory_tweet_word_cloud.png)
+- **Longitud vs Likes**: ![Longitud](datasets/PR_Advisory_Tweets_Feb_2025/analysis/advisory_length_vs_likes.png)
 
-## Project Context
+## Contexto del proyecto
 
-Puerto Rico is highly vulnerable to hurricanes and earthquakes. While these events differ in nature, both generate significant media impact and intense social media responses. Public perception, misinformation spread, and emotional language during these events can vary greatly. This project aims to analyze and compare how Puerto Ricans react to hurricanes (e.g., Hurricane Maria) and earthquakes (e.g., January 2020 earthquakes) using social media text analysis, particularly on Twitter. This comparison will help identify communication patterns and risk perception differences for various threats.
+Puerto Rico es altamente vulnerable a huracanes y terremotos. Aunque estos eventos son diferentes en su naturaleza, ambos generan un gran impacto mediático y provocan intensas reacciones en redes sociales. La percepción pública, la propagación de desinformación y el lenguaje emocional pueden variar significativamente. Este proyecto busca analizar y comparar cómo reaccionan los puertorriqueños ante huracanes (ej. María) y terremotos (ej. enero 2020) usando análisis de texto en redes sociales, especialmente en Twitter. Esta comparación permitirá identificar patrones de comunicación y diferencias en la percepción del riesgo ante distintas amenazas.
 
-## License
-This project is licensed under the MIT License - see the LICENSE.md file for details.
+## Licencia
+Este proyecto está licenciado bajo la Licencia MIT. Consulta el archivo LICENSE.md para más detalles.
 
-## Acknowledgments
-- HumAID dataset
-- ISCRAM18 dataset
-- Contributors and researchers involved in data collection and analysis
+## Agradecimientos
+- Dataset HumAID  
+- Dataset ISCRAM18  
+- A los colaboradores e investigadores que participaron en la recolección y análisis de datos
 
-## Citation
-Citations are included in CITATION.md file.
+## Citación
+Las citas académicas correspondientes se encuentran en el archivo CITATION.md.
