@@ -9,8 +9,8 @@ PR-Disaster-Tweets/
 ├── datasets/                          # Todos los conjuntos de datos utilizados
 │   ├── HumAID_maria_tweets/           # Archivos del dataset HumAID para el huracán María
 │   ├── ISCRAM_maria_tweets/           # Archivos del dataset ISCRAM para el huracán María
-│   ├── PR_Earthquake_Tweets_Jan2020/  # Dataset personalizado para los terremotos de enero 2020
-│   └── PR_Advisory_Tweets_Feb_2025/   # Dataset personalizado para la alerta de tsunami de febrero 2025
+│   ├── VT_TDB_2020/                   # Dataset de tweets sobre terremotos en 2020
+│   └── DTC2020/                       # Disaster Tweet Corpus 2020
 ├── .venv/                             # Entorno virtual para dependencias
 ├── CITATION.md                        # Información de citación
 ├── LICENSE.md                         # Información de la licencia
@@ -33,25 +33,24 @@ Contiene datos anotados de desastres (huracanes y terremotos) del [Dataset HumAI
 - Simpatía y apoyo
 
 ### `/datasets/ISCRAM_maria_tweets/`
-Incluye archivos del [dataset ISCRAM 2018](https://arxiv.org/pdf/1805.05144) sobre el huracán María. Contiene aproximadamente 1,000 tweets con ID de tweet. Como el dataset original solo incluía los IDs, el texto fue recuperado mediante "hydration" con [twikit](https://github.com/d60/twikit) para analizar la percepción pública durante el evento. Visualizaciones incluidas:
+Incluye archivos del [dataset ISCRAM 2018](https://arxiv.org/pdf/1805.05144) sobre el huracán María. Contiene aproximadamente 2,500 tweets con ID de tweet. Como el dataset original solo incluía los IDs, el texto fue recuperado mediante "hydration" con [twikit](https://github.com/d60/twikit) para analizar la percepción pública durante el evento. Visualizaciones incluidas:
 - Métricas de interacción
 - Distribución de "likes"
 
-### `/datasets/PR_Earthquake_Tweets_Jan2020/`
-Colección personalizada de tweets relacionados con los **terremotos de enero 2020 en Puerto Rico**. Incluye aproximadamente 300 tweets y permite comparaciones entre desastres pasados y reacciones actuales en redes sociales. Los datos fueron recolectados usando [Octoparse](https://www.octoparse.com/) con filtros por palabras clave, fechas y geolocalización. Visualizaciones incluidas:
-- Métricas de interacción
-- Distribución de idiomas
-- Distribución de likes
-- Histogramas y boxplots de longitud de tweet
-- Nubes de palabras
+### `/datasets/DTC2020/`
+Incluye datos del **Disaster Tweet Corpus 2020 (DTC2020)**, un conjunto de tweets recopilados durante 48 desastres en 10 tipos de desastres. Este dataset contiene tweets anotados manualmente para indicar si están relacionados con un desastre específico o no. El archivo `hurricane-maria-2017.ndjson` contiene 7,674 tweets relacionados con el huracán María (2017). Este dataset es ideal para tareas de filtrado y clasificación de tweets relacionados con desastres. Se puede encontrar en su [página web](https://zenodo.org/records/3713920#:~:text=Disaster%20Tweet%20Corpus%202020%20,to%20this%20disaster%20or)
+Referencias:
+- Wiegmann, M., Kersten, J., Klan, F., Potthast, M., Stein, B. (2020). Analysis of Filtering Models for Disaster-Related Tweets. Proceedings of the 17th ISCRAM.
+- Otros trabajos citados en la documentación del dataset.
 
-### `/datasets/PR_Advisory_Tweets_Feb_2025/`
-Colección personalizada de tweets sobre la **alerta de tsunami en febrero de 2025**. Incluye aproximadamente 250 tweets. Permite comparar desastres anteriores con reacciones actuales. Los datos fueron recolectados usando [Octoparse](https://www.octoparse.com/) aplicando filtros por palabras clave, fechas y ubicación. Este dataset se utilizará para análisis de sentimiento y detección de desinformación. Visualizaciones incluidas:
-- Métricas de interacción
-- Distribución de idiomas
-- Distribución de likes
-- Histogramas y boxplots de longitud de tweet
-- Nubes de palabras
+### `/datasets/VT_TDB_2020/`
+Este dataset fue desarrollado como parte del estudio **CS 4624: Multimedia, Hypertext, and Information Access** en Virginia Tech, Spring 2020. Permite realizar análisis comparativos entre desastres y explorar patrones de interacción en redes sociales. El dataset original fue proporcionado por la **Dra. Ziqian Song** e incluye los siguientes archivos con IDs de tweets:
+- `PR_Earthquake.csv` – 21,755 IDs
+- `PR_Earthquake_Location.csv` – 2,260,249 IDs
+- `maria_tweets.json` – 801,939 IDs
+
+Dado que estos archivos contienen únicamente IDs, se realizó un proceso de 'scraping' utilizando **Octoparse** para recolectar alrededor de 10,000 tweets relacionados con los sismos de 2020 en Puerto Rico, encontrado en el archivo `PR_Earthquake_2020.csv`. Este dataset permite realizar análisis comparativos entre desastres y explorar patrones de interacción en redes sociales.
+
 
 ## Ejecución del análisis
 
@@ -74,81 +73,31 @@ source venv/bin/activate  # En Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-### 📘 Notebook Jupyter (Análisis unificado)
+### 📘 Notebook Jupyter
 
-Se incluye un notebook consolidado, **`PR-Disaster-Tweets.ipynb`**, en la raíz del proyecto. Este archivo integra todos los scripts de análisis y documentación en un solo formato interactivo.
+Este proyecto incluye dos notebooks principales para el análisis de datos:
 
-#### Para ejecutarlo:
+#### 1. `datasets\HumAID_maria_tweets\HumAID_maria_tweets.ipynb`
+**Análisis Exploratorio y Enriquecimiento Semántico de Tweets del Huracán María (`HumAID_maria_tweets.csv`)**
 
-1. **Navega al directorio del proyecto** (si no estás ya allí):
-   ```bash
-   cd PR-Disaster-Tweets
-   ```
+Este notebook realiza un análisis exhaustivo del dataset anotado de tweets del huracán María. El enfoque es multidimensional, combinando:
+- **Limpieza de texto:** Eliminación de ruido textual, normalización y manejo de stopwords.
+- **Ingeniería de características:** Creación de métricas como longitud del texto, frecuencia de hashtags y análisis de sentimiento.
+- **Visualizaciones:** Histogramas, nubes de palabras y gráficos de barras para explorar patrones de datos.
+- **Análisis de sentimiento:** Clasificación de tweets en categorías emocionales (positivos, negativos, neutrales).
+- **Insights clave:** Identificación de temas humanitarios y patrones de comunicación durante el huracán.
 
-2. **Activa el entorno virtual** (opcional pero recomendado):
-   ```bash
-   source venv/bin/activate        # macOS/Linux
-   venv\Scripts\activate           # Windows
-   ```
+#### 2. `datasets\ISCRAM_maria_tweets\ISCRAM_maria_tweets.ipynb`
 
-3. **Instala las dependencias necesarias** (si aún no lo hiciste):
-   ```bash
-   pip install -r requirements.txt
-   ```
+Este notebook se centra en el análisis multidimensional de tweets relacionados con el huracán María, integrando datos crudos, metadatos y técnicas avanzadas de NLP. Las etapas clave incluyen:
+- **Preprocesamiento y limpieza:** Renombrar columnas, eliminar ruido textual, normalización y detección de idioma.
+- **Ingeniería de características:** Creación de métricas como longitud del texto, identificación de retweets y puntuación de engagement.
+- **Análisis temporal:** Exploración de series de tiempo para correlacionar actividad en redes sociales con eventos climáticos.
+- **Análisis de sentimiento y emociones:** Clasificación emocional y análisis de solidaridad, urgencia y críticas.
+- **Visualizaciones:** Mapas de calor, nubes de palabras y gráficos de barras para explorar patrones de datos.
+- **Integración con datos externos:** Comparación de menciones en redes sociales con estadísticas oficiales (ej. FEMA, NOAA).
 
-4. **Lanza Jupyter Notebook**:
-   ```bash
-   jupyter notebook
-   ```
-
-5. Abre `PR-Disaster-Tweets.ipynb` desde el navegador o desde un IDE y ejecuta las celdas para explorar todos los datasets y visualizaciones en un solo lugar.
-
-> Este notebook es ideal para demostraciones, presentaciones académicas y análisis exploratorios completos.
-> También está disponible como PDF: `PR-Disaster-Tweets.pdf`.
-
-### Procesamiento y análisis de datos
-
-#### Dataset HumAID
-```bash
-cd datasets/HumAID_maria_tweets/analysis
-python analyze_humaid.py
-```
-
-#### Dataset ISCRAM
-```bash
-cd datasets/ISCRAM_maria_tweets/analysis/
-python analyze_ISCRAM_tweets.py
-```
-
-#### Tweets de los Terremotos (Enero 2020)
-```bash
-cd datasets/PR_Earthquake_Tweets_Jan2020/analysis/
-python analyze_Jan2020_tweets.py
-```
-
-#### Tweets de la Alerta (Febrero 2025)
-```bash
-cd datasets/PR_Advisory_Tweets_Feb_2025/analysis/
-python analyze_Feb2025_tweets.py
-```
-
-## Ejemplos de visualizaciones
-
-### Análisis de tweets del huracán María (HumAID)
-- **Nube de Palabras**: ![Nube](datasets/HumAID_maria_tweets/analysis/humaid_tweet_word_cloud.png)
-- **Distribución por Etiqueta**: ![Etiquetas](datasets/HumAID_maria_tweets/analysis/humaid_class_distribution.png)
-
-### Análisis de tweets del huracán María (ISCRAM)
-- **Nube de Palabras**: ![Nube](datasets/ISCRAM_maria_tweets/analysis/tweet_word_cloud.png)
-- **Longitud vs Likes**: ![Longitud](datasets/ISCRAM_maria_tweets/analysis/length_vs_likes.png)
-
-### Análisis de tweets de los terremotos (Enero 2020)
-- **Nube de Palabras**: ![Nube](datasets/PR_Earthquake_Tweets_Jan2020/analysis/tweet_word_cloud.png)
-- **Métricas de Interacción**: ![Interacción](datasets/PR_Earthquake_Tweets_Jan2020/analysis/interaction_metrics.png)
-
-### Análisis de tweets de la alerta de tsunami (Febrero 2025)
-- **Nube de Palabras**: ![Nube](datasets/PR_Advisory_Tweets_Feb_2025/analysis/advisory_tweet_word_cloud.png)
-- **Longitud vs Likes**: ![Longitud](datasets/PR_Advisory_Tweets_Feb_2025/analysis/advisory_length_vs_likes.png)
+Ambos notebooks están diseñados para proporcionar análisis detallados y visualizaciones interactivas que faciliten la comprensión de los datos sociales generados durante desastres naturales.
 
 ## Contexto del proyecto
 
@@ -160,7 +109,12 @@ Este proyecto está licenciado bajo la Licencia MIT. Consulta el archivo LICENSE
 ## Agradecimientos
 - Dataset HumAID  
 - Dataset ISCRAM18  
-- A los colaboradores e investigadores que participaron en la recolección y análisis de datos
+- Dataset VT_TDB_2020: Basado en el estudio **CS 4624: Multimedia, Hypertext, and Information Access**, Virginia Tech, Spring 2020.  
+  **Twitter Disaster Behavior: Final Report**  
+  Kayley Bogemann, Shane Burchard, Jessie Butler, Austin Spencer, Taylor Thackaberry  
+  Cliente: Ziqian (Alice) Song  
+  Profesor: Edward Fox  
+  Mayo 5, 2020
 
 ## Citación
 Las citas académicas correspondientes se encuentran en el archivo CITATION.md.
