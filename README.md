@@ -11,11 +11,10 @@ PR-Disaster-Tweets/
 │   ├── ISCRAM_maria_tweets/           # Archivos del dataset ISCRAM para el huracán María
 │   ├── VT_TDB_2020/                   # Dataset de tweets sobre terremotos en 2020
 │   └── DTC2020/                       # Disaster Tweet Corpus 2020
-├── .venv/                             # Entorno virtual para dependencias
-├── CITATION.md                        # Información de citación
 ├── LICENSE.md                         # Información de la licencia
 ├── README.md                          # Documentación del proyecto
 ├── requirements.txt                   # Dependencias de Python
+├── setup.bat                          # Setup script para proyecto (Windows)
 ```
 
 ## Detalles de los conjuntos de datos
@@ -62,16 +61,23 @@ git clone https://github.com/marcoyuuu/PR-Disaster-Tweets.git
 cd PR-Disaster-Tweets
 ```
 
-2. Crea un entorno virtual (opcional pero recomendado):
-```bash
-python -m venv venv
-source venv/bin/activate  # En Windows: venv\Scripts\activate
+2. **Opción 1: Usar el script `setup.bat` (Windows)**  
+Ejecuta el script `setup.bat` para configurar automáticamente el entorno virtual, instalar dependencias y descargar recursos necesarios:
+```cmd
+setup.bat
 ```
 
-3. Instala las dependencias:
-```bash
-pip install -r requirements.txt
-```
+3. **Opción 2: Configuración manual**  
+   a. Crea un entorno virtual (opcional pero recomendado):
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # En Windows: venv\Scripts\activate
+   ```
+
+   b. Instala las dependencias:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
 ### 📘 Notebook Jupyter
 
