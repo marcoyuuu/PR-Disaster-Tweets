@@ -37,7 +37,7 @@ Incluye archivos del [dataset ISCRAM 2018](https://arxiv.org/pdf/1805.05144) sob
 - Distribución de "likes"
 
 ### `/datasets/DTC2020/`
-Incluye datos del **Disaster Tweet Corpus 2020 (DTC2020)**, un conjunto de tweets recopilados durante 48 desastres en 10 tipos de desastres. Este dataset contiene tweets anotados manualmente para indicar si están relacionados con un desastre específico o no. El archivo `hurricane-maria-2017.ndjson` contiene 7,674 tweets relacionados con el huracán María (2017). Este dataset es ideal para tareas de filtrado y clasificación de tweets relacionados con desastres. Se puede encontrar en su [página web](https://zenodo.org/records/3713920#:~:text=Disaster%20Tweet%20Corpus%202020%20,to%20this%20disaster%20or)
+Incluye datos del [dataset Disaster Tweet Corpus 2020 (DTC2020)](https://zenodo.org/records/713920#:~:text=Disaster%20Tweet%20Corpus%202020%20,to%20this%20disaster%20or), un conjunto de tweets recopilados durante 48 desastres en 10 tipos de desastres. Este dataset contiene tweets anotados manualmente para indicar si están relacionados con un desastre específico o no. El archivo `hurricane-maria-2017.ndjson` contiene 7,674 tweets relacionados con el huracán María (2017). Este dataset es ideal para tareas de filtrado y clasificación de tweets relacionados con desastres.
 Referencias:
 - Wiegmann, M., Kersten, J., Klan, F., Potthast, M., Stein, B. (2020). Analysis of Filtering Models for Disaster-Related Tweets. Proceedings of the 17th ISCRAM.
 - Otros trabajos citados en la documentación del dataset.
@@ -113,14 +113,12 @@ Puerto Rico es altamente vulnerable a huracanes y terremotos. Aunque estos event
 Este proyecto está licenciado bajo la Licencia MIT. Consulta el archivo LICENSE.md para más detalles.
 
 ## Agradecimientos
-- Dataset HumAID  
-- Dataset ISCRAM18  
-- Dataset VT_TDB_2020: Basado en el estudio **CS 4624: Multimedia, Hypertext, and Information Access**, Virginia Tech, Spring 2020.  
+- [Dataset HumAID de CrisisNLP (ICWSM 2021)](https://crisisnlp.qcri.org/humaid_dataset).
+- [Dataset ISCRAM 2018](https://arxiv.org/pdf/1805.05144)
+- [Dataset Disaster Tweet Corpus 2020 (DTC2020)](https://zenodo.org/records/713920#:~:text=Disaster%20Tweet%20Corpus%202020%20,to%20this%20disaster%20or)
+- Dataset VT_TDB_2020: Basado en el estudio **CS 4624: Multimedia, Hypertext, and Information Access**, Virginia Tech, Spring 2020.
   **Twitter Disaster Behavior: Final Report**  
   Kayley Bogemann, Shane Burchard, Jessie Butler, Austin Spencer, Taylor Thackaberry  
   Cliente: Ziqian (Alice) Song  
   Profesor: Edward Fox  
   Mayo 5, 2020
-
-## Citación
-Las citas académicas correspondientes se encuentran en el archivo CITATION.md.
