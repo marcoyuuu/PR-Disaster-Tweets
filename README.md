@@ -31,13 +31,31 @@ Contiene datos anotados de desastres (huracanes y terremotos) del [Dataset HumAI
 - Voluntariado o donaciones de rescate
 - Simpatía y apoyo
 
+### `/datasets/HumAID_additional_hurricanes/`
+Contiene datos anotados de desastres relacionados con huracanes adicionales del [Dataset HumAID de CrisisNLP (ICWSM 2021)](https://crisisnlp.qcri.org/humaid_dataset). Estos datasets incluyen tweets clasificados por temas humanitarios y son útiles para tareas de clasificación temática supervisada. Los huracanes incluidos son:
+
+#### `/datasets/HumAID_additional_hurricanes/hurricane_dorian_2019/`
+Este dataset contiene tweets relacionados con el huracán Dorian (2019) y comparte las mismas subcategorías que `/datasets/HumAID_maria_tweets/`.
+
+#### `/datasets/HumAID_additional_hurricanes/hurricane_florence_2018/`
+Este dataset contiene tweets relacionados con el huracán Florence (2018) y comparte las mismas subcategorías que `/datasets/HumAID_maria_tweets/`.
+
+#### `/datasets/HumAID_additional_hurricanes/hurricane_harvey_2017/`
+Este dataset contiene tweets relacionados con el huracán Harvey (2017) y comparte las mismas subcategorías que `/datasets/HumAID_maria_tweets/`.
+
+#### `/datasets/HumAID_additional_hurricanes/hurricane_irma_2017/`
+Este dataset contiene tweets relacionados con el huracán Irma (2017) y comparte las mismas subcategorías que `/datasets/HumAID_maria_tweets/`.
+
+#### `/datasets/HumAID_additional_hurricanes/hurricane_matthew_2016/`
+Este dataset contiene tweets relacionados con el huracán Matthew (2016) y comparte las mismas subcategorías que `/datasets/HumAID_maria_tweets/`.
+
 ### `/datasets/ISCRAM_maria_tweets/`
 Incluye archivos del [dataset ISCRAM 2018](https://arxiv.org/pdf/1805.05144) sobre el huracán María. Contiene aproximadamente 2,500 tweets con ID de tweet. Como el dataset original solo incluía los IDs, el texto fue recuperado mediante "hydration" con [twikit](https://github.com/d60/twikit) para analizar la percepción pública durante el evento. Visualizaciones incluidas:
 - Métricas de interacción
 - Distribución de "likes"
 
 ### `/datasets/DTC2020/`
-Incluye datos del [dataset Disaster Tweet Corpus 2020 (DTC2020)](https://zenodo.org/records/713920#:~:text=Disaster%20Tweet%20Corpus%202020%20,to%20this%20disaster%20or), un conjunto de tweets recopilados durante 48 desastres en 10 tipos de desastres. Este dataset contiene tweets anotados manualmente para indicar si están relacionados con un desastre específico o no. El archivo `hurricane-maria-2017.ndjson` contiene 7,674 tweets relacionados con el huracán María (2017). Este dataset es ideal para tareas de filtrado y clasificación de tweets relacionados con desastres.
+Incluye datos del [dataset Disaster Tweet Corpus 2020 (DTC2020)](https://doi.org/10.5281/zenodo.3713919), un conjunto de tweets recopilados durante 48 desastres en 10 tipos de desastres. Este dataset contiene tweets anotados manualmente para indicar si están relacionados con un desastre específico o no. El archivo `hurricane-maria-2017.ndjson` contiene 7,674 tweets relacionados con el huracán María (2017). Este dataset es ideal para tareas de filtrado y clasificación de tweets relacionados con desastres.
 Referencias:
 - Wiegmann, M., Kersten, J., Klan, F., Potthast, M., Stein, B. (2020). Analysis of Filtering Models for Disaster-Related Tweets. Proceedings of the 17th ISCRAM.
 - Otros trabajos citados en la documentación del dataset.
@@ -50,6 +68,7 @@ Este dataset fue desarrollado como parte del estudio **CS 4624: Multimedia, Hype
 
 Dado que estos archivos contienen únicamente IDs, se realizó un proceso de 'scraping' utilizando **Octoparse** para recolectar alrededor de 10,000 tweets relacionados con los sismos de 2020 en Puerto Rico, encontrado en el archivo `PR_Earthquake_2020.csv`. Este dataset permite realizar análisis comparativos entre desastres y explorar patrones de interacción en redes sociales.
 
+---
 
 ## Ejecución del análisis
 
