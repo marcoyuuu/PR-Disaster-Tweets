@@ -1,0 +1,78 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
+from collections import Counter
+import nltk
+
+
+#Load the datasets
+hurricane = pd.read_csv('marianews_labeled.csv')
+earthquake = pd.read_csv('earthquakenews_labeled.csv')
+
+#Parse date column
+hurricane['DATE'] = pd.to_datetime(hurricane['DATE'])
+earthquake['DATE'] = pd.to_datetime(earthquake['DATE'])
+
+#Lowercase sentiments for consistency
+hurricane['SENTIMENT'] = hurricane['SENTIMENT'].str.lower()
+earthquake['SENTIMENT'] = earthquake['SENTIMENT'].str.lower()
+
+
+#Normalize = True gives proportions
+hurricane_dist = hurricane['SENTIMENT'].value_counts(normalize=True)
+earthquake_dist = earthquake['SENTIMENT'].value_counts(normalize=True)
+
+#Combine into one DataFrame for side-by-side plotting
+comparison_df = pd.DataFrame({
+    'Hurricane Maria': hurricane_dist,
+    'Earthquakes 2020': earthquake_dist
+}).fillna(0)
+
+#Plot overall sentiment distribution for both datasets (Side-by-Side)
+comparison_df.plot(kind='bar', figsize=(8, 5), title='Overall Sentiment Distribution Comparison')
+plt.ylabel('Proportion')
+plt.xticks(rotation=0)
+plt.grid(axis='y', linestyle='--', alpha=0.7)
+plt.tight_layout()
+plt.show()
+
+#Stopwords to exclude common words
+stop_words = set(stopwords.words('english'))
+
+#Function to extract and count words by sentiment class
+def get_most_common_words(df, sentiment_label):
+    #Filter the dataset by sentiment
+    sentiment_data = df[df['SENTIMENT'] == sentiment_label]
+    
+    #Combine all headlines into one large string
+    all_text = ' '.join(sentiment_data['ARTICLE_TITLE'])
+    
+    #Tokenize and remove stopwords
+    words = word_tokenize(all_text.lower())
+    filtered_words = [word for word in words if word.isalnum() and word not in stop_words]
+    
+    #Count word frequency
+    word_counts = Counter(filtered_words)
+    
+    #Return the top most common words
+    return word_counts.most_common(10)
+
+#Get most common words for each sentiment class in both datasets
+positive_words_hurricane = get_most_common_words(hurricane, 'positive')
+negative_words_hurricane = get_most_common_words(hurricane, 'negative')
+neutral_words_hurricane = get_most_common_words(hurricane, 'neutral')
+
+positive_words_earthquake = get_most_common_words(earthquake, 'positive')
+negative_words_earthquake = get_most_common_words(earthquake, 'negative')
+neutral_words_earthquake = get_most_common_words(earthquake, 'neutral')
+
+#Display the most commo words for each sentiment class
+print("Positive Words (Hurricane Maria):", positive_words_hurricane)
+print("Negative Words (Hurricane Maria):", negative_words_hurricane)
+print("Neutral Words (Hurricane Maria):", neutral_words_hurricane)
+
+print("Positive Words (Earthquakes 2020):", positive_words_earthquake)
+print("Negative Words (Earthquakes 2020):", negative_words_earthquake)
+print("Neutral Words (Earthquakes 2020):", neutral_words_earthquake)
+

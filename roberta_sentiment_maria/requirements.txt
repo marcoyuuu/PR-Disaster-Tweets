@@ -1,0 +1,17 @@
+# PyTorch con soporte CUDA 12.1
+torch==2.2.2+cu121
+--extra-index-url https://download.pytorch.org/whl/cu121
+
+# NLP y procesamiento de texto
+transformers==4.40.1
+numpy<2.0
+emoji
+
+# Visualización y análisis de resultados
+pandas
+scipy
+matplotlib
+seaborn
+
+# Herramientas de desarrollo y gestión de proyectos
+black

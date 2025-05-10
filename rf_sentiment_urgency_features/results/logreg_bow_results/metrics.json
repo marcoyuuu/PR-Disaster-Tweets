@@ -1,0 +1,46 @@
+{
+  "f1_macro": 0.262369937869601,
+  "f1_micro": 0.6489538974264025,
+  "f1_weighted": 0.510797981244002,
+  "classification_report": {
+    "0": {
+      "precision": 0.6489538974264025,
+      "recall": 1.0,
+      "f1-score": 0.787109813608803,
+      "support": 3505.0
+    },
+    "1": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1-score": 0.0,
+      "support": 1295.0
+    },
+    "2": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1-score": 0.0,
+      "support": 601.0
+    },
+    "accuracy": 0.6489538974264025,
+    "macro avg": {
+      "precision": 0.21631796580880083,
+      "recall": 0.3333333333333333,
+      "f1-score": 0.262369937869601,
+      "support": 5401.0
+    },
+    "weighted avg": {
+      "precision": 0.4211411609849178,
+      "recall": 0.6489538974264025,
+      "f1-score": 0.510797981244002,
+      "support": 5401.0
+    }
+  },
+  "train_time": 0.10445237159729004,
+  "split_sizes": {
+    "train": 26002,
+    "test": 5401,
+    "dev": 2777
+  },
+  "timestamp": "2025-05-09T23:51:13.509751",
+  "git_hash": "17d53375ce54eeef5527ae48d71861f23931e88d"
+}

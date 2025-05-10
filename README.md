@@ -1,64 +1,117 @@
-# PR-Disaster-Tweets: Análisis de la percepción pública y la cobertura mediática durante desastres naturales en Puerto Rico
+
+# Estudio de Reacciones Públicas en Redes Sociales durante Desastres Naturales en Puerto Rico
+
+**Autores:**
+- Sebastián H. Jansasoy Molina (Universidad de Puerto Rico, Mayagüez) — sebastian.jansasoy@upr.edu
+- Marco Yu Cordero (Universidad de Puerto Rico, Mayagüez) — marco.yu@upr.edu
+- Taix Pacheco García (Universidad de Puerto Rico, Mayagüez) — taix.pacheco@upr.edu
+- Sebastian Hernandez Acevedo (Universidad de Puerto Rico, Mayagüez) — sebastian.hernandez10@upr.edu
+
+## Resumen
+Los desastres naturales provocan una notable actividad en redes sociales, generando tanto información crítica como contenido irrelevante o emocional. Este estudio presenta un análisis automatizado de tweets relacionados con el huracán María en Puerto Rico, dirigido a mejorar la gestión informativa durante emergencias. Inicialmente, se clasificaron los tweets en tres categorías—informativos, no informativos y neutrales—utilizando técnicas avanzadas de procesamiento de lenguaje natural (NLP), métodos clásicos de aprendizaje supervisado y redes neuronales profundas. Posteriormente, se realizó un análisis de sentimientos para determinar el tono emocional predominante en las publicaciones. Los resultados experimentales indican que los modelos supervisados, especialmente la regresión logística y redes neuronales simples, lograron altos niveles de precisión en la identificación de contenido relevante. Este enfoque evidencia su potencial para aplicaciones prácticas en tiempo real y establece una base sólida para futuras investigaciones que incorporen técnicas avanzadas de aprendizaje profundo y análisis multimodal.
+
 
 ## Descripción del proyecto
-Este proyecto se enfoca en analizar la percepción pública y la cobertura mediática durante desastres naturales en Puerto Rico, con especial énfasis en el huracán María (2017), los terremotos de 2020 y la alerta de tsunami de 2025. El análisis combina múltiples conjuntos de datos, incluyendo HumAID, ISCRAM18 y datasets personalizados recolectados, con el fin de ofrecer información sobre patrones de respuesta ante desastres, sentimiento público y necesidades humanitarias.
+Puerto Rico, debido a su ubicación geográfica y condiciones climáticas, es particularmente vulnerable a desastres naturales como huracanes, terremotos y tsunamis. Estos eventos ocasionan daños físicos y sociales significativos, además de generar una notable actividad en plataformas digitales, especialmente en redes sociales como Twitter. Durante estas situaciones de crisis, los usuarios suelen compartir tanto información crítica y solicitudes de ayuda como mensajes irrelevantes o desinformativos. Esta gran cantidad de datos plantea una oportunidad y un desafío para los equipos encargados de gestionar emergencias.
+
+Este proyecto presenta un enfoque basado en técnicas de machine learning para clasificar automáticamente publicaciones de Twitter relacionadas con el huracán María en Puerto Rico. La clasificación propuesta se realiza en tres categorías fundamentales: informativos, no informativos y neutrales. El objetivo principal es optimizar el procesamiento y análisis de grandes volúmenes de datos textuales en tiempo real, facilitando así la toma de decisiones oportunas, la coordinación eficiente de recursos y la intervención humanitaria efectiva.
+
+Para lograr este objetivo, se emplearon técnicas avanzadas de procesamiento de lenguaje natural (NLP), modelos clásicos de aprendizaje supervisado (Naive Bayes, SVM, Regresión Logística) y redes neuronales profundas. Complementariamente, se realizó un análisis de sentimientos para profundizar en la comprensión emocional de los mensajes. El presente repositorio detalla la metodología utilizada, los experimentos desarrollados y los resultados obtenidos, proporcionando un análisis exhaustivo del desempeño, ventajas y limitaciones de cada modelo implementado.
+
 
 ## Estructura del repositorio
+## Metodología
+
+### Conjuntos de Datos
+- **HumAID Hurricane María Dataset:** Más de 7,300 tweets anotados manualmente en categorías humanitarias (precaución, desplazados, infraestructura, solicitudes urgentes, etc.).
+- **HumAID Additional Hurricanes Dataset:** Aproximadamente 34,000 tweets anotados de múltiples huracanes (Dorian, Florence, Harvey, Irma, Matthew), combinados para mejorar la generalización de los modelos.
+- **ISCRAM18 Dataset, DTC2020, VT-TDB:** Utilizados para análisis exploratorio, validación cruzada y análisis de sentimiento.
+
+### Pipeline metodológico
+1. **Preprocesamiento:** Conversión a minúsculas, limpieza de URLs, menciones, hashtags, números y signos, tokenización y lematización.
+2. **Análisis exploratorio:** Visualizaciones (histogramas, nubes de palabras, distribución de clases).
+3. **Vectorización:** BoW (unigramas/bigramas) y TF-IDF.
+4. **Modelado:** Naive Bayes, SVM, Regresión Logística, redes neuronales profundas (con regularización y ajuste de pesos por clase).
+5. **Evaluación:** Matriz de confusión, precisión, recall, F1-score por clase y macro.
+6. **Análisis de sentimiento:** VADER y RoBERTa para caracterización emocional.
+7. **Complementos:** Modelos Random Forest, análisis de urgencia, explicabilidad (SHAP), análisis de noticias y terremotos.
+## Resultados principales
+
+- **Modelos clásicos:** Regresión Logística y SVM alcanzaron F1 macro de 0.61 y accuracy de 0.89.
+- **Red neuronal mejorada:** F1 macro de 0.63 y accuracy de 0.90, mostrando mejor capacidad para manejar clases desbalanceadas.
+- **Random Forest:** F1 macro de 0.36, útil por su interpretabilidad y análisis de características semánticas.
+- **Análisis de sentimiento:** RoBERTa y VADER permitieron caracterizar el tono emocional, mostrando mayor negatividad en categorías asociadas a daños y pérdidas.
+- **Impacto de datos adicionales:** El uso de múltiples huracanes mejoró la robustez y generalización de los modelos.
+## Discusión y recomendaciones
+
+Los resultados evidencian la efectividad de modelos neuronales mejorados y la importancia de técnicas de regularización y ajuste de pesos para abordar el desbalance de clases. Se recomienda:
+- Optimizar hiperparámetros y realizar feature selection automática.
+- Implementar técnicas de balanceo (SMOTE, oversampling).
+- Comparar con arquitecturas avanzadas (Transformers, BERT, RoBERTa).
+- Ampliar y anotar manualmente nuevos datasets.
+- Profundizar en la explicabilidad (SHAP, LIME).
 ```
 PR-Disaster-Tweets/
 ├── datasets/                          # Todos los conjuntos de datos utilizados
-│   ├── HumAID_maria_tweets/           # Archivos del dataset HumAID para el huracán María
-│   ├── ISCRAM_maria_tweets/           # Archivos del dataset ISCRAM para el huracán María
-│   ├── VT_TDB_2020/                   # Dataset de tweets sobre terremotos en 2020
-│   └── DTC2020/                       # Disaster Tweet Corpus 2020
+│   ├── HumAID_main/                   # Dataset HumAID completo y preprocesado
+│   ├── HumAID_maria_tweets/           # Tweets anotados del huracán María + análisis y visualizaciones
+│   │   ├── analysis/                  # Scripts y resultados de análisis exploratorio
+│   │   ├── clean/                     # Versiones limpias de los datos
+│   │   ├── figures/                   # Figuras y visualizaciones generadas
+│   │   └── subcategories/             # Tweets separados por subcategoría humanitaria
+│   ├── HumAID_additional_hurricanes/  # Tweets anotados de otros huracanes (Dorian, Florence, Harvey, Irma, Matthew)
+│   ├── ISCRAM_maria_tweets/           # Tweets ISCRAM María + análisis, visualizaciones y limpieza
+│   │   ├── analysis/                  # Scripts de análisis y visualizaciones
+│   │   ├── clean/                     # Datos limpios
+│   │   └── visualizaciones/           # Figuras y gráficos generados
+│   ├── DTC2020/                       # Disaster Tweet Corpus 2020 (hurricane-maria-2017.ndjson)
+│   └── VT_TDB_2020/                   # Dataset de terremotos 2020 y reporte original
+├── HumAID_classification/             # Notebook de clasificación temática para HumAID María
+├── complementary_analysis_trees_news_earthquakes/ # Análisis complementario de noticias y terremotos
+├── rf_sentiment_urgency_features/     # Scripts y resultados de clasificación de sentimiento/urgencia
+├── roberta_sentiment_maria/           # Análisis de sentimiento avanzado con RoBERTa sobre tweets del huracán María
+├── report/                            # Reporte final del estudio
 ├── LICENSE.md                         # Información de la licencia
 ├── README.md                          # Documentación del proyecto
 ├── requirements.txt                   # Dependencias de Python
-├── setup.bat                          # Setup script para proyecto (Windows)
 ```
 
-## Detalles de los conjuntos de datos
+
+## Detalles de los conjuntos de datos y recursos
+
+### `/datasets/HumAID_main/`
+Contiene el dataset HumAID completo, preprocesado y reclasificado, útil para análisis globales y comparativos.
 
 ### `/datasets/HumAID_maria_tweets/`
-Contiene datos anotados de desastres (huracanes y terremotos) del [Dataset HumAID de CrisisNLP (ICWSM 2021)](https://crisisnlp.qcri.org/humaid_dataset). Este dataset incluye aproximadamente 7,300 tweets clasificados por temas humanitarios y sirve como base para tareas de clasificación temática supervisada. Las subcategorías incluyen:
-- Precaución y consejos
-- Personas desplazadas y evacuaciones
-- Daños a infraestructura y servicios
-- Personas heridas o fallecidas
-- No humanitario
-- Otra información relevante
-- Solicitudes o necesidades urgentes
-- Voluntariado o donaciones de rescate
-- Simpatía y apoyo
+Tweets anotados del huracán María (2017) con subcarpetas para análisis, limpieza y visualizaciones. Incluye:
+- Datos originales y limpios (`clean/`)
+- Subconjuntos por subcategoría humanitaria (`subcategories/`)
+- Scripts y resultados de análisis exploratorio (`analysis/`)
+- Figuras y gráficos (`figures/`)
 
 ### `/datasets/HumAID_additional_hurricanes/`
-Contiene datos anotados de desastres relacionados con huracanes adicionales del [Dataset HumAID de CrisisNLP (ICWSM 2021)](https://crisisnlp.qcri.org/humaid_dataset). Estos datasets incluyen tweets clasificados por temas humanitarios y son útiles para tareas de clasificación temática supervisada. Los huracanes incluidos son:
-
-#### `/datasets/HumAID_additional_hurricanes/hurricane_dorian_2019/`
-Este dataset contiene tweets relacionados con el huracán Dorian (2019) y comparte las mismas subcategorías que `/datasets/HumAID_maria_tweets/`.
-
-#### `/datasets/HumAID_additional_hurricanes/hurricane_florence_2018/`
-Este dataset contiene tweets relacionados con el huracán Florence (2018) y comparte las mismas subcategorías que `/datasets/HumAID_maria_tweets/`.
-
-#### `/datasets/HumAID_additional_hurricanes/hurricane_harvey_2017/`
-Este dataset contiene tweets relacionados con el huracán Harvey (2017) y comparte las mismas subcategorías que `/datasets/HumAID_maria_tweets/`.
-
-#### `/datasets/HumAID_additional_hurricanes/hurricane_irma_2017/`
-Este dataset contiene tweets relacionados con el huracán Irma (2017) y comparte las mismas subcategorías que `/datasets/HumAID_maria_tweets/`.
-
-#### `/datasets/HumAID_additional_hurricanes/hurricane_matthew_2016/`
-Este dataset contiene tweets relacionados con el huracán Matthew (2016) y comparte las mismas subcategorías que `/datasets/HumAID_maria_tweets/`.
+Tweets anotados de otros huracanes (Dorian 2019, Florence 2018, Harvey 2017, Irma 2017, Matthew 2016), con splits de entrenamiento, validación y prueba. Todas las subcarpetas comparten las mismas subcategorías que HumAID María.
 
 ### `/datasets/ISCRAM_maria_tweets/`
-Incluye archivos del [dataset ISCRAM 2018](https://arxiv.org/pdf/1805.05144) sobre el huracán María. Contiene aproximadamente 2,500 tweets con ID de tweet. Como el dataset original solo incluía los IDs, el texto fue recuperado mediante "hydration" con [twikit](https://github.com/d60/twikit) para analizar la percepción pública durante el evento. Visualizaciones incluidas:
-- Métricas de interacción
-- Distribución de "likes"
+Tweets del huracán María del dataset ISCRAM 2018, con IDs hidratados y análisis avanzado. Incluye:
+- Datos originales, preprocesados y limpios (`clean/`)
+- Scripts y visualizaciones (`analysis/`, `visualizaciones/`)
+- Notebook de análisis multidimensional (`ISCRAM_maria_tweets.ipynb`)
 
 ### `/datasets/DTC2020/`
-Incluye datos del [dataset Disaster Tweet Corpus 2020 (DTC2020)](https://doi.org/10.5281/zenodo.3713919), un conjunto de tweets recopilados durante 48 desastres en 10 tipos de desastres. Este dataset contiene tweets anotados manualmente para indicar si están relacionados con un desastre específico o no. El archivo `hurricane-maria-2017.ndjson` contiene 7,674 tweets relacionados con el huracán María (2017). Este dataset es ideal para tareas de filtrado y clasificación de tweets relacionados con desastres.
-Referencias:
-- Wiegmann, M., Kersten, J., Klan, F., Potthast, M., Stein, B. (2020). Analysis of Filtering Models for Disaster-Related Tweets. Proceedings of the 17th ISCRAM.
-- Otros trabajos citados en la documentación del dataset.
+Disaster Tweet Corpus 2020: tweets anotados de 48 desastres, incluyendo `hurricane-maria-2017.ndjson` (7,674 tweets). Útil para tareas de filtrado y clasificación binaria.
+
+### `/datasets/VT_TDB_2020/`
+Dataset de terremotos en Puerto Rico (2020) y huracán María, con archivos de IDs y reporte original. Incluye datos recolectados vía scraping y permite análisis comparativos entre desastres.
+
+
+### Recursos de análisis y clasificación
+- `code/`: Script de clasificación de sentimiento y urgencia (`sentiment_disaster_classifier.py`).
+- `HumAID_classification/`: Notebook de clasificación temática para HumAID María.
+- `rf_sentiment_urgency_features/`: Scripts y resultados de modelos de sentimiento/urgencia.
+- `complementary_analysis_trees_news_earthquakes/`: Análisis de noticias y terremotos, scripts y visualizaciones.
+- `roberta_sentiment_maria/`: Análisis de sentimiento avanzado con RoBERTa sobre tweets del huracán María, usando el modelo preentrenado `cardiffnlp/twitter-roberta-base-sentiment-latest` para texto informal en Twitter.
+- `report/`: Reporte final del estudio en PDF.
 
 ### `/datasets/VT_TDB_2020/`
 Este dataset fue desarrollado como parte del estudio **CS 4624: Multimedia, Hypertext, and Information Access** en Virginia Tech, Spring 2020. Permite realizar análisis comparativos entre desastres y explorar patrones de interacción en redes sociales. El dataset original fue proporcionado por la **Dra. Ziqian Song** e incluye los siguientes archivos con IDs de tweets:
@@ -98,35 +151,23 @@ setup.bat
    pip install -r requirements.txt
    ```
 
-### 📘 Notebook Jupyter
 
-Este proyecto incluye dos notebooks principales para el análisis de datos:
+### 📘 Notebooks y scripts de análisis
 
-#### 1. `datasets\HumAID_maria_tweets\HumAID_maria_tweets.ipynb`
-**Análisis Exploratorio y Enriquecimiento Semántico de Tweets del Huracán María (`HumAID_maria_tweets.csv`)**
+El repositorio incluye notebooks y scripts para análisis exploratorio, clasificación y visualización:
 
-Este notebook realiza un análisis exhaustivo del dataset anotado de tweets del huracán María. El enfoque es multidimensional, combinando:
-- **Limpieza de texto:** Eliminación de ruido textual, normalización y manejo de stopwords.
-- **Ingeniería de características:** Creación de métricas como longitud del texto, frecuencia de hashtags y análisis de sentimiento.
-- **Visualizaciones:** Histogramas, nubes de palabras y gráficos de barras para explorar patrones de datos.
-- **Análisis de sentimiento:** Clasificación de tweets en categorías emocionales (positivos, negativos, neutrales).
-- **Insights clave:** Identificación de temas humanitarios y patrones de comunicación durante el huracán.
+- `datasets/HumAID_maria_tweets/HumAID_maria_tweets.ipynb`: Análisis exploratorio y enriquecimiento semántico de tweets del huracán María, con limpieza, ingeniería de características, visualizaciones y análisis de sentimiento.
+- `datasets/ISCRAM_maria_tweets/ISCRAM_maria_tweets.ipynb`: Análisis multidimensional de tweets ISCRAM María, con integración de metadatos, análisis temporal, sentimiento y visualizaciones avanzadas.
+- `datasets/HumAID_maria_tweets/analysis/` y `datasets/ISCRAM_maria_tweets/analysis/`: Scripts Python para análisis y generación de figuras.
+- `HumAID_classification/Classification_Model_Hurracane_Maria_tweets.ipynb`: Clasificación automática de temas humanitarios en HumAID María.
+- `rf_sentiment_urgency_features/`: Modelos de clasificación de sentimiento y urgencia.
+- `complementary_analysis_trees_news_earthquakes/`: Análisis complementario de noticias y terremotos.
 
-#### 2. `datasets\ISCRAM_maria_tweets\ISCRAM_maria_tweets.ipynb`
 
-Este notebook se centra en el análisis multidimensional de tweets relacionados con el huracán María, integrando datos crudos, metadatos y técnicas avanzadas de NLP. Las etapas clave incluyen:
-- **Preprocesamiento y limpieza:** Renombrar columnas, eliminar ruido textual, normalización y detección de idioma.
-- **Ingeniería de características:** Creación de métricas como longitud del texto, identificación de retweets y puntuación de engagement.
-- **Análisis temporal:** Exploración de series de tiempo para correlacionar actividad en redes sociales con eventos climáticos.
-- **Análisis de sentimiento y emociones:** Clasificación emocional y análisis de solidaridad, urgencia y críticas.
-- **Visualizaciones:** Mapas de calor, nubes de palabras y gráficos de barras para explorar patrones de datos.
-- **Integración con datos externos:** Comparación de menciones en redes sociales con estadísticas oficiales (ej. FEMA, NOAA).
 
-Ambos notebooks están diseñados para proporcionar análisis detallados y visualizaciones interactivas que faciliten la comprensión de los datos sociales generados durante desastres naturales.
+## Conclusiones
 
-## Contexto del proyecto
-
-Puerto Rico es altamente vulnerable a huracanes y terremotos. Aunque estos eventos son diferentes en su naturaleza, ambos generan un gran impacto mediático y provocan intensas reacciones en redes sociales. La percepción pública, la propagación de desinformación y el lenguaje emocional pueden variar significativamente. Este proyecto busca analizar y comparar cómo reaccionan los puertorriqueños ante huracanes (ej. María) y terremotos (ej. enero 2020) usando análisis de texto en redes sociales, especialmente en Twitter. Esta comparación permitirá identificar patrones de comunicación y diferencias en la percepción del riesgo ante distintas amenazas.
+Este proyecto demuestra la viabilidad de modelos automatizados para clasificar y analizar tweets durante desastres naturales en Puerto Rico, alcanzando altos niveles de precisión y generalización. La integración de múltiples datasets y técnicas avanzadas de NLP y aprendizaje profundo permite abordar tanto la relevancia informativa como la dimensión emocional de los mensajes. El código fuente, scripts de preprocesamiento, entrenamiento, análisis de sentimiento y visualización están disponibles en este repositorio, facilitando su reutilización y adaptación para investigaciones futuras sobre comunicación digital durante desastres naturales.
 
 ## Licencia
 Este proyecto está licenciado bajo la Licencia MIT. Consulta el archivo LICENSE.md para más detalles.

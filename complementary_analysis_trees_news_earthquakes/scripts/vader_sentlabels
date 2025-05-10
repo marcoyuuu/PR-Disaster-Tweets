@@ -1,0 +1,26 @@
+import pandas as pd
+from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
+
+#Initialize VADER sentiment analyzer
+analyzer = SentimentIntensityAnalyzer()
+
+#Read the CSV file
+df = pd.read_csv('earthquakenews_articles.csv')  
+
+#Define a function to classify sentiment based on the compound score
+def sentiment(text):
+    sentiment = analyzer.polarity_scores(text)
+    compound_score = sentiment['compound']
+    if compound_score > 0.05:
+        return 'Positive'
+    elif compound_score < -0.05:
+        return 'Negative'
+    else:
+        return 'Neutral'
+
+#Apply the function to the 'Article title' column and create a new column for sentiment
+df['SENTIMENT'] = df['ARTICLE_TITLE'].apply(sentiment)
+
+#Save the updated DataFrame to a new CSV file
+df.to_csv('earthquakenews_labeled.csv', index=False)  
+

@@ -1,0 +1,137 @@
+import pandas as pd
+import nltk
+import re
+import string
+import matplotlib.pyplot as plt
+import numpy as np
+from nltk.corpus import stopwords
+from nltk.stem import WordNetLemmatizer
+from sklearn.model_selection import cross_val_score, train_test_split
+from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
+from sklearn.pipeline import make_pipeline
+from sklearn.linear_model import LogisticRegression
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.svm import LinearSVC
+from sklearn.preprocessing import LabelEncoder
+from sklearn.metrics import f1_score
+
+
+#Load & Preprocess Data for Sentiment
+df = pd.read_csv("earthquakenews_labeled.csv")  
+df = df.dropna(subset=["ARTICLE_TITLE", "SENTIMENT"])
+
+
+stop_words = set(stopwords.words("english"))
+lemmatizer = WordNetLemmatizer()
+
+def preprocess_text(text):
+    text = text.lower()
+    text = re.sub(r"http\S+", "", text)
+    text = text.translate(str.maketrans("", "", string.punctuation))
+    tokens = nltk.word_tokenize(text)
+    tokens = [lemmatizer.lemmatize(word) for word in tokens if word not in stop_words and word.isalpha()]
+    return " ".join(tokens)
+
+df["ARTICLE_TITLE"] = df["ARTICLE_TITLE"].apply(preprocess_text)
+
+X = df["ARTICLE_TITLE"].values
+y = LabelEncoder().fit_transform(df["SENTIMENT"].values)
+
+X_train, _, y_train, _ = train_test_split(X, y, test_size=0.2, stratify=y, random_state=42)
+
+#Feature Extractors
+feature_extractors = {
+    "BoW": CountVectorizer(stop_words="english", ngram_range=(1, 1), max_features=5000),
+    "TF-IDF": TfidfVectorizer(stop_words="english", ngram_range=(1, 2), max_features=5000)
+}
+
+
+#Define Models (with NB unbalanced only)
+models = {
+    "LogReg": {
+        "unbalanced": LogisticRegression(max_iter=1000),
+        "balanced": LogisticRegression(max_iter=1000, class_weight='balanced')
+    },
+    "SVM": {
+        "unbalanced": LinearSVC(),
+        "balanced": LinearSVC(class_weight='balanced')
+    },
+    "NaiveBayes": {
+        "unbalanced": MultinomialNB()  # Only unbalanced
+    }
+}
+
+#Cross-Validation Evaluation for Sentiment
+results_sentiment = {
+    "Feature": [],
+    "Model": [],
+    "Weighting": [],
+    "Accuracy": [],
+    "F1_weighted": [],
+    "F1_macro": []
+}
+
+
+for fe_name, vectorizer in feature_extractors.items():
+    for model_name, variants in models.items():
+        for weight_type, model in variants.items():
+            pipeline = make_pipeline(vectorizer, model)
+
+            acc = cross_val_score(pipeline, X_train, y_train, cv=5, scoring="accuracy").mean()
+            f1_weighted = cross_val_score(pipeline, X_train, y_train, cv=5, scoring="f1_weighted").mean()
+            f1_macro = cross_val_score(pipeline, X_train, y_train, cv=5, scoring="f1_macro").mean()
+
+            results_sentiment["Feature"].append(fe_name)
+            results_sentiment["Model"].append(model_name)
+            results_sentiment["Weighting"].append(weight_type)
+            results_sentiment["Accuracy"].append(acc)
+            results_sentiment["F1_weighted"].append(f1_weighted)
+            results_sentiment["F1_macro"].append(f1_macro)
+
+            print(f"Sentiment | {fe_name} | {model_name} | {weight_type}: "
+                  f"Acc={acc:.3f}, F1_weighted={f1_weighted:.3f}, F1_macro={f1_macro:.3f}")
+
+#Convert to DataFrame for Sentiment
+results_sentiment_df = pd.DataFrame(results_sentiment)
+
+
+#Plotting Function for Sentiment
+def plot_metric(df, metric):
+    fig, ax = plt.subplots(figsize=(12, 6))
+    labels = df["Model"] + " (" + df["Weighting"] + ")"
+    features = df["Feature"].unique()
+    
+    bar_width = 0.4
+    x = np.arange(len(df) // len(features))  # e.g., one bar per model/weight combo
+    offsets = {"BoW": 0, "TF-IDF": bar_width}
+
+    for feat in features:
+        sub = df[df["Feature"] == feat]
+        offset = offsets[feat]
+        colors = {"BoW": "lightgreen", "TF-IDF": "mediumseagreen"}
+        bars = ax.bar(x + offset, sub[metric], width=bar_width, label=feat, color=colors[feat])
+
+        # Add text labels
+        for i, bar in enumerate(bars):
+            height = bar.get_height()
+            ax.text(bar.get_x() + bar.get_width() / 2, height + 0.01,
+                    f"{height:.2f}", ha='center', va='bottom', fontsize=9)
+
+    ax.set_xticks(x + bar_width / 2)
+    ax.set_xticklabels(labels[:len(x)], rotation=45)
+    ax.set_title(f"{metric} by Model, Weighting and Feature Type")
+    ax.set_ylabel(metric)
+    ax.set_ylim(0, 1.05)
+    ax.legend()
+    ax.grid(axis='y', linestyle='--', alpha=0.6)
+    plt.tight_layout()
+    plt.show()
+
+
+#Plots
+plot_metric(results_sentiment_df, "Accuracy")
+plot_metric(results_sentiment_df, "F1_weighted")
+plot_metric(results_sentiment_df, "F1_macro")
+
+#Class Imbalance 
+print(df["SENTIMENT"].value_counts(normalize=True))

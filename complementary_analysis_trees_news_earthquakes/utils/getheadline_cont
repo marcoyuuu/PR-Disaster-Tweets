@@ -1,0 +1,30 @@
+import pandas as pd
+from newspaper import Article
+import time
+
+#Load data 
+df = pd.read_csv("hurricanemaria_news.csv")  # Update filename if needed
+
+#  Prepare new columns for article content
+df["ARTICLE_TITLE"] = ""
+df["ARTICLE_TEXT"] = ""
+
+#Extract content from each URL 
+for idx, row in df.iterrows():
+    url = row["SOURCEURLS"]
+    try:
+        article = Article(url)
+        article.download()
+        article.parse()
+        
+        df.at[idx, "ARTICLE_TITLE"] = article.title
+        df.at[idx, "ARTICLE_TEXT"] = article.text
+
+        print(f"[✓] Extracted: {url}")
+        time.sleep(1)  #to not overload servers
+    except Exception as e:
+        print(f"[!] Failed: {url} — {e}")
+
+#Save to new CSV
+df.to_csv("articles_with_text.csv", index=False)
+print("✅ Done! Saved to articles_with_text.csv")

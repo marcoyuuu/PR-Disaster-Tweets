@@ -1,0 +1,21 @@
+import pandas as pd
+
+
+input_file = "20250210.gkg.csv"  
+output_file = "filtered_gkg.csv"
+keywords = [ "tsunami", "caribbean"]  
+
+#Load GKG CSV 
+df = pd.read_csv(input_file, dtype=str, sep="\t", encoding="latin1", low_memory=False)
+
+
+print(df.columns)
+#Ensure all keywords appear in SOURCESURL
+df_filtered = df[df['SOURCEURLS'].apply(lambda url: all(kw.lower() in str(url).lower() for kw in keywords))]
+
+df_filtered=df_filtered[['DATE', 'TONE','SOURCES', 'SOURCEURLS']]
+
+#Save Filtered Data
+df_filtered.to_csv(output_file, index=False)
+
+print(f"Filtered data saved to {output_file}")

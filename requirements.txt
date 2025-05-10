@@ -15,3 +15,7 @@ langdetect
 scikit-learn
 googletrans
 umap-learn
+vaderSentiment
+imblearn
+tqdm
+pandarallel
